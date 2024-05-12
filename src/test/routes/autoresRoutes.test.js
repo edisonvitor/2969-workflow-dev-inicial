@@ -70,12 +70,12 @@ describe('GET em /autores', () => {
   it('nao deve terunar um autor com id invalido', (done) => {
     const idAutor = 'A';
     chai.request(app)
-     .get(`/autores/${idAutor}/livros`)
-     .set('Accept', 'application/json')
-     .end((err, res) => {
+      .get(`/autores/${idAutor}/livros`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
         expect(res.status).to.equal(500);
         expect(res.body).to.have.property('message')
-         .eql(`Autor com id ${idAutor} não encontrado`);
+          .eql(`Autor com id ${idAutor} não encontrado`);
         done();
       });
   });

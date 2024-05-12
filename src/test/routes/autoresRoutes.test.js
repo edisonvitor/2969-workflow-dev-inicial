@@ -52,6 +52,33 @@ describe('GET em /autores', () => {
         done();
       });
   });
+
+  it('deve retornar os livros com o id do autor', (done) => {
+    const idAutor = 1;
+    chai.request(app)
+      .get(`/autores/${idAutor}/livros`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('autor');
+        expect(res.body).to.have.property('livros');
+        expect(res.body.livros).to.be.an('array');
+        done();
+      });
+  });
+
+  it('nao deve terunar um autor com id invalido', (done) => {
+    const idAutor = 'A';
+    chai.request(app)
+     .get(`/autores/${idAutor}/livros`)
+     .set('Accept', 'application/json')
+     .end((err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body).to.have.property('message')
+         .eql(`Autor com id ${idAutor} não encontrado`);
+        done();
+      });
+  });
 });
 
 describe('POST em /autores', () => {
